@@ -12,7 +12,7 @@ The scripts are written with this hierarchy in mind.
 
 Markdown is fast. Canvas LMS is slow. I have wasted hours of time on one class navigating to pages, clicking edit, clicking html, saving, publishing, etc.
 
-With this project I write my content as I desire. I include images that are web hosted (e.g. amazon s3, b2, 3cmediasolutions, etc.) and use embed codes for videos.
+With this project I write my content as I desire. I include images that are web hosted (e.g. amazon s3, b2, 3cmediasolutions, etc.) and use embed codes for videos. Another great embeddable resource is any kind of google doc or form.
 
 When I update content I can use any text editor to make the updates and then run a script to update that page on canvas.
 
@@ -20,7 +20,7 @@ When I update content I can use any text editor to make the updates and then run
 
 I can run the script twice to update 2 courses in canvas. I have multiple sections of the same course.
 
-### I own it
+### I own my work 
 
 You may be able to export your canvas course and keep a copy. Then you can import that to your new course and make changes as needed. I have found this time consuming for large courses I teach. 
 
@@ -43,3 +43,9 @@ Next run the api_test.py to make sure everything is working and to get your user
 ### Create a test page
 
 Create a test page in the pages folder in Markdown and run the create_page.py script.
+
+## Requirements
+
+* Python 3
+* pip canvasapi
+* pip markdown
