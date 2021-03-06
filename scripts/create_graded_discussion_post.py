@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-# create_page.py
+# create_discussion_post.py
 # sable cantus
-# updated: 1/21
+# August 2020
+# create a discussion post from a mardown file
 
 import os
 import sys
@@ -14,15 +15,15 @@ try:
 except:
     sys.exit('dependency needed: $ pip3 install canvasapi')
 
+from canvasapi import Canvas
+
 # check that the markdown module is installed
 try:
     pkg_resources.require('markdown')
 except:
     sys.exit('dependency needed: $ pip3 install markdown')
 import markdown
-
-from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_PAGES
+from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_DISCUSSIONS
 
 # Initiate the new Canvas object
 canvas = Canvas(API_URL, API_KEY)
@@ -41,23 +42,35 @@ if len(sys.argv) > 1:
     print("File chose: ", file_name)
     title = input("Please enter the title: ")
 else:
-    title, file_name = _chooseFile.chooseFile(MY_PAGES)
+    title, file_name = _chooseFile.chooseFile(MY_DISCUSSIONS)
 
-# read the body from a markdown file
+os.chdir(MY_DISCUSSIONS)
 with open(file_name, "r", encoding="utf-8") as input_file:
     text = input_file.read()
-page_body = markdown.markdown(text)
+message = markdown.markdown(text)
 
-# create the page
-new_page = course.create_page({
-    'title': title,
-    'body': page_body,
-    'published': True})
-print("Created: ", new_page)
+points = input("How many points possible? ")
+if points == '':
+    points = '1'
+    print('points: ', points)
 
-#####################################
-# TODO
+post = course.create_discussion_topic(
+        title=title,
+        message=message,
+        published=False,
+        discussion_type='threaded',
+        allow_rating=True,
+        assignment={
+            'points_possible': points
+        }
+        )
+
+print('Created: ', post)
+
+print(post.url)
+
+##############################################################################
+# To-Do
 #
-# [X] read html from file when creating page
-# [X] choose from a list of files and input title
-#####################################
+# [X] How can I attach images to the uploaded post?
+# --- Upload them to 3c and use a public link

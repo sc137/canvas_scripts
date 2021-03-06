@@ -2,8 +2,7 @@
 # api_test.py
 # sable cantus
 # recent update 8/25/20
-# Run this script after updating _credentials.py
-# Confirm your url, api key, and course are correct
+# Run this to confirm everything is working and you have the correct class selected
 
 import sys
 import pkg_resources
@@ -19,8 +18,19 @@ from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
 
 # Initiate the new Canvas object
 canvas = Canvas(API_URL, API_KEY)
+"""
+# select user sable
+user = canvas.get_user(USER_ID)
+# get info for sable
+courses = user.get_courses()
+print('All Courses for Sable')
+for course in courses:
+    print(course)
+print()
+print(user.email)
+"""
 
-# get a specific course
+# get a specific course 
 course = canvas.get_course(COURSE_NUM)
 print("Selected course: \n", course.name)
 print()
@@ -83,12 +93,13 @@ print()
 """
 
 # get questions for a quiz 40476
-# quiz = course.get_quiz(40476)
-# questions = quiz.get_questions()
-# for question in questions:
+#quiz = course.get_quiz(40476)
+#questions = quiz.get_questions()
+#for question in questions:
 #    print()
 #    print("question {}".format(question.question_name))
 #    print(question.question_text)
 #    print()
 #    for answer in question.answers:
 #        print(answer["weight"], answer["text"])
+

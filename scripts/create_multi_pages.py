@@ -2,8 +2,6 @@
 # create_multi_pages.py
 # sable cantus
 # January 2021
-# create a series of blank pages with titles
-# useful for outlining a course before updating content
 
 import os
 import sys
@@ -23,12 +21,12 @@ except:
 import markdown
 
 from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
+from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_PAGES
 
 # Initiate the new Canvas object
 canvas = Canvas(API_URL, API_KEY)
 
-# get a specific course
+# get a specific course 
 course = canvas.get_course(COURSE_NUM)
 print("Selected course: \n", course.name)
 print()
@@ -42,9 +40,9 @@ new_pages = [
 for new_page in new_pages:
     page_title = new_page[0]
 
-    # read the body from a markdown file
+    # read the body from a markdown file 
     page_file = new_page[1]
-    os.chdir('../pages')
+    os.chdir(MY_PAGES)
     with open(page_file, "r", encoding="utf-8") as input_file:
         text = input_file.read()
     page_body = markdown.markdown(text)

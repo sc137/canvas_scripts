@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-# create_Weeks.py
+# list_assignments.py
 # sable cantus
-# Jan 2021
+# Feb 2021
 
 import sys
 import pkg_resources
+import _chooseFile
 
 # check that the canvasapi is installed
 try:
@@ -23,13 +24,10 @@ course = canvas.get_course(COURSE_NUM)
 print("Selected course: \n", course.name)
 print()
 
-module_list = [
-    'Your List of Modules',
-    'Go Here...'
-]
+# list all assignments
+print("All assignemtns for the course:")
+assignments = course.get_assignments()
 
-for module in module_list:
-    new_Week = course.create_module({
-        'name': module,
-        'published': False})
-    print("Created: ", new_Week)
+for assignment in assignments:
+    print(assignment)
+

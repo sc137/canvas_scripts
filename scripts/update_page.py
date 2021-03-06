@@ -2,7 +2,6 @@
 # update_pages.py
 # sable cantus
 # August 2020
-# update an existing page in canvas
 
 import os
 import sys
@@ -24,12 +23,12 @@ except:
     sys.exit('dependency needed: $ pip3 install markdown')
 import markdown
 
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
+from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_PAGES
 
 # Initiate the new Canvas object
 canvas = Canvas(API_URL, API_KEY)
 
-# get a specific course
+# get a specific course 
 course = canvas.get_course(COURSE_NUM)
 print("Selected course: \n", course.name)
 print()
@@ -37,7 +36,6 @@ print()
 #########################################
 # get a specific page to update
 #
-
 # list all pages
 print("Select a page to update:")
 page_list = course.get_pages(sort="title")
@@ -47,13 +45,15 @@ pages = []
 for i in page_list:
     pages.append(i)
 
-# drop page ulrs and sort
+# drop page urls and sort
 page_urls = []
 for page in pages:
     page_urls.append(page.url)
 page_urls.sort()
 
 length = len(page_urls)
+#print("There are", length, "pages.")
+# print the sorted urls
 for url in page_urls:
     print(page_urls.index(url)+1, "-", url)
 
@@ -74,9 +74,10 @@ page = course.get_page(page_url)
 
 #########################################
 # choose the file from the pages directory
-title, file_name = _chooseFile.chooseFile('../pages')
+# 
+title, file_name = _chooseFile.chooseFile(MY_PAGES)
 
-os.chdir('../pages')
+os.chdir(MY_PAGES)
 with open(file_name, "r", encoding="utf-8") as input_file:
     text = input_file.read()
 updated_body = markdown.markdown(text)
@@ -88,17 +89,13 @@ page.edit(wiki_page={
     "body": updated_body}
     )
 
-updated_page_url = API_URL
-                    + "/courses/"
-                    + str(COURSE_NUM)
-                    + "/pages/"
-                    + page_url
+updated_page_url = API_URL + "/courses/" + str(COURSE_NUM) + "/pages/" + page_url
 print("Updated: ", updated_page_url)
 
-###############################################################################
+##############################################################################
 # TODO
 # [X] validate that page URL is correct
 # [X] validate updated html page is correct
 # [X] accept input from CLI?
 # [X] convert markdown to html
-###############################################################################
+##############################################################################

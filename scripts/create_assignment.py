@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# create_page.py
+# create_assignment.py
 # sable cantus
-# updated: 1/21
+# August 2020
 
 import os
 import sys
@@ -22,7 +22,7 @@ except:
 import markdown
 
 from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_PAGES
+from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_ASSIGNMENTS
 
 # Initiate the new Canvas object
 canvas = Canvas(API_URL, API_KEY)
@@ -41,23 +41,28 @@ if len(sys.argv) > 1:
     print("File chose: ", file_name)
     title = input("Please enter the title: ")
 else:
-    title, file_name = _chooseFile.chooseFile(MY_PAGES)
+    title, file_name = _chooseFile.chooseFile(MY_ASSIGNMENTS)
 
 # read the body from a markdown file
 with open(file_name, "r", encoding="utf-8") as input_file:
     text = input_file.read()
 page_body = markdown.markdown(text)
 
-# create the page
-new_page = course.create_page({
-    'title': title,
-    'body': page_body,
-    'published': True})
-print("Created: ", new_page)
+points = input("How many points possible? ")
+if points == '':
+    points = '5'
+    print('points: ', points)
 
-#####################################
-# TODO
-#
-# [X] read html from file when creating page
-# [X] choose from a list of files and input title
-#####################################
+new_assignment = course.create_assignment({
+    'name': title,
+    'description': page_body,
+    'published': False,
+    'points_possible': points,
+    'submission_types': 'online_upload'
+                        # online_upload
+                        # online_text_entry
+                        # online_url
+    })
+
+print(new_assignment)
+print("Assignment created at: ", new_assignment.html_url)
