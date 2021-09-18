@@ -49,3 +49,9 @@ Create a test page in the pages folder in Markdown and run the create_page.py sc
 * Python 3
 * pip canvasapi
 * pip markdown
+
+## Project Links
+
+* [UCFOPEN CanvasAPI Github](https://github.com/ucfopen/canvasapi)
+* [CanvasAPI Documentation](https://canvasapi.readthedocs.io/en/stable/getting-started.html)
+* [Canvas LMS API Documentation](https://canvas.instructure.com/doc/api/index.html)
