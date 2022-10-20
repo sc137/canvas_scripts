@@ -1,3 +1,3 @@
-Create markdown files here that will be converted to html and uploaded to your course as pages.
+Create a markdown file for each page.
 
 Use static urls for images and embed video code.
