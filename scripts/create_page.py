@@ -59,7 +59,7 @@ new_page = course.create_page({
     'published': True})
 
 print("Created: ", new_page)
-pyperclip.copy(new_page)
+pyperclip.copy(new_page.html_url)
 
 #####################################
 # TODO
