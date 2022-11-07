@@ -67,6 +67,7 @@ canvas_scripts
     ├── list_pages.py
     ├── list_quizzes.py
     ├── list_students.py
+    ├── update_multi_pages.py
     └── update_page.py
 </pre>
 
