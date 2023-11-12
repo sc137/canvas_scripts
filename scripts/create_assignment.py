@@ -1,33 +1,10 @@
 #!/usr/bin/env python3
 # create_assignment.py
 # sable cantus
-# August 2020
-# updated: 10/22
 
-import os
 import sys
-import pkg_resources
 import _chooseFile
-
-# check that the canvasapi is installed
-try:
-    pkg_resources.require('canvasapi')
-except:
-    sys.exit('dependency needed: $ pip3 install canvasapi')
-
-# check that the markdown module is installed
-try:
-    pkg_resources.require('markdown')
-except:
-    sys.exit('dependency needed: $ pip3 install markdown')
 import markdown
-
-try:
-    pkg_resources.require('pyperclip')
-except:
-    sys.exit('dependency needed: $ pip3 install pyperclip')
-import pyperclip
-
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, MY_ASSIGNMENTS
 
@@ -67,4 +44,3 @@ new_assignment = course.create_assignment({
 
 print(new_assignment)
 print("Assignment created at: ", new_assignment.html_url)
-pyperclip.copy(new_assignment.html_url)

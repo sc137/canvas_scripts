@@ -1,16 +1,6 @@
 #!/usr/bin/env python3
 # list_discussions.py
 # sable cantus
-# August 2020
-
-import sys
-import pkg_resources
-
-# check that the canvasapi is installed
-try:
-    pkg_resources.require('canvasapi')
-except:
-    sys.exit('dependency needed: $ pip3 install canvasapi')
 
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID

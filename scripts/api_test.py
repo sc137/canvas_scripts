@@ -1,17 +1,8 @@
 #!/usr/bin/env python3
 # api_test.py
 # sable cantus
-# recent update 8/25/20
-# Run this to confirm everything is working and you have the correct class selected
-
-import sys
-import pkg_resources
-
-# check that the canvasapi is installed
-try:
-    pkg_resources.require('canvasapi')
-except:
-    sys.exit('dependency needed: $ pip3 install canvasapi')
+# Run this to confirm everything is working 
+# and you have the correct class selected
 
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID

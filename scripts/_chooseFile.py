@@ -3,7 +3,6 @@
 #
 # Call this to list and choose files
 # sable cantus
-# Jan 2021
 # import _chooseFile
 # _chooseFile.chooseFile('../pages')
 

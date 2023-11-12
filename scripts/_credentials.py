@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # _credentials.py
 # sable cantus
-# 1/15/21
 # from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID,
 # MY_PAGES, MY_ANNOUNCEMENTS, MY_DISCUSSIONS, MY_ASSIGNMENTS
 

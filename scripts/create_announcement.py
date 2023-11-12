@@ -1,36 +1,12 @@
 #!/usr/bin/env python3
 # create_announcement.py
 # sable cantus
-# August 2020
 # create a discussion post from a mardown file
-# updated: 10/22
 
-import os
 import sys
-import pkg_resources
 import _chooseFile
-
-# check that the canvasapi is installed
-try:
-    pkg_resources.require('canvasapi')
-except:
-    sys.exit('dependency needed: $ pip3 install canvasapi')
-
 from canvasapi import Canvas
-
-# check that the markdown module is installed
-try:
-    pkg_resources.require('markdown')
-except:
-    sys.exit('dependency needed: $ pip3 install markdown')
 import markdown
-
-try:
-    pkg_resources.require('pyperclip')
-except:
-    sys.exit('dependency needed: $ pip3 install pyperclip')
-import pyperclip
-
 from _credentials import API_URL, API_KEY, COURSE_NUM, MY_ANNOUNCEMENTS
 
 # Initiate the new Canvas object
@@ -70,7 +46,6 @@ post = course.create_discussion_topic(
 print('Created: ', post)
 
 print(post.url)
-pyperclip.copy(post.url)
 
 ##############################################################################
 # To-Do

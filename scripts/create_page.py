@@ -1,32 +1,10 @@
 #!/usr/bin/env python3
 # create_page.py
 # sable cantus
-# updated: 10/22
 
-import os
 import sys
-import pkg_resources
 import _chooseFile
-
-# check that the canvasapi is installed
-try:
-    pkg_resources.require('canvasapi')
-except:
-    sys.exit('dependency needed: $ pip3 install canvasapi')
-
-# check that the markdown module is installed
-try:
-    pkg_resources.require('markdown')
-except:
-    sys.exit('dependency needed: $ pip3 install markdown')
 import markdown
-
-try:
-    pkg_resources.require('pyperclip')
-except:
-    sys.exit('dependency needed: $ pip3 install pyperclip')
-import pyperclip
-
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, MY_PAGES
 
@@ -59,11 +37,3 @@ new_page = course.create_page({
     'published': True})
 
 print("Created: ", new_page)
-pyperclip.copy(new_page.html_url)
-
-#####################################
-# TODO
-#
-# [X] read html from file when creating page
-# [X] choose from a list of files and input title
-#####################################

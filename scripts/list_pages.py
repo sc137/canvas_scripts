@@ -1,17 +1,6 @@
 #!/usr/bin/env python3
 # list_pages.py
 # sable cantus
-# Jan 2021
-
-import sys
-import pkg_resources
-import _chooseFile
-
-# check that the canvasapi is installed
-try:
-    pkg_resources.require('canvasapi')
-except:
-    sys.exit('dependency needed: $ pip3 install canvasapi')
 
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
@@ -46,5 +35,3 @@ print("There are", length, "pages.")
 # print the sorted urls
 for url in page_urls:
     print(page_urls.index(url)+1, "-", url)
-
-
