@@ -57,7 +57,6 @@ canvas_scripts
     ├── create_modules.py
     ├── create_multi_pages.py
     ├── create_page.py
-    ├── create_quiz.py
     ├── get_page_contents.py
     ├── list_assignments.py
     ├── list_courses.py
@@ -103,7 +102,6 @@ usage with filename:
 - Python 3
 - pip3 canvasapi
 - pip3 markdown
-- pip3 pyperclip
 
 ## Project Links
 
