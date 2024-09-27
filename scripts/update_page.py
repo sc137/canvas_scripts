@@ -63,7 +63,7 @@ title, file_name = _chooseFile.chooseFile(MY_PAGES)
 os.chdir(MY_PAGES)
 with open(file_name, "r", encoding="utf-8") as input_file:
     text = input_file.read()
-updated_body = markdown.markdown(text)
+updated_body = markdown.markdown(text, extensions=['sane_lists'])
 
 # help from the slack channel - this cmd works
 # page.edit(wiki_page={"title": "Updated title", "body": "Updated body."})

@@ -3,6 +3,7 @@
 # sable cantus
 # Run this to confirm everything is working 
 # and you have the correct class selected
+# This script will display your canvas user ID
 
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID

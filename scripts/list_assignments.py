@@ -14,7 +14,7 @@ print("Selected course: \n", course.name)
 print()
 
 # list all assignments
-print("All assignemtns for the course:")
+print("All assignments for the course:")
 assignments = course.get_assignments()
 
 for assignment in assignments:
