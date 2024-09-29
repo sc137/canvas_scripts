@@ -50,11 +50,13 @@ canvas_scripts
 └── scripts
     ├── _chooseFile.py
     ├── _credentials.py
+    ├── api_get_user_id.py
     ├── api_test.py
     ├── create_announcement.py
     ├── create_assignment.py
     ├── create_discussion_post.py
     ├── create_modules.py
+    ├── create_multi_announcements.py
     ├── create_multi_pages.py
     ├── create_page.py
     ├── get_page_contents.py
@@ -74,9 +76,9 @@ canvas_scripts
 
 ### Setup the course
 
-Start by opening the scripts folder and editing the \_credentials.py file.
+Start by opening the scripts folder and editing the `_credentials.py` file.
 
-Next run the api_test.py to make sure everything is working and to get your user ID. Put that in the \_credentials.py file too.
+Next run the `api_get_user_id.py` to make sure everything is working and to get your user ID. Put that in the `_credentials.py` file too.
 
 ### Create a test page
 
