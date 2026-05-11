@@ -1,55 +1,41 @@
-# Canvas Course Builder & Updater
+# Canvas Course Scripts
 
-This project uses a series of python scripts to build and update your Canvas LMS course pages, discussions, assignments, and more.
+This repository is a collection of Python scripts for managing Canvas LMS course content from local files. It is meant to be cloned for a new class, configured with that course's Canvas credentials, and then used to create, update, list, and export Canvas content as needed.
 
-We create markdown documents in the various folders and run the appropriate script from the scripts folder. I have found this helps with large courses that have dozens of pages, discussions, and assignments.
+Credentials are intentionally handled with a local-only file. The repository includes `scripts/_credentials.example.py` as the template, but each user creates their own ignored `scripts/_credentials.py` for real Canvas tokens and course IDs.
 
-The scripts are written with this hierarchy in mind.
+The main workflow is:
 
-## Why use scripts?
+1. Write course content as Markdown in the content folders.
+2. Copy `scripts/_credentials.example.py` to `scripts/_credentials.py`.
+3. Configure Canvas credentials in `scripts/_credentials.py`.
+4. Run scripts from the repository root to create, update, list, or export Canvas course data.
 
-### This is very fast for me to use
+## What This Is For
 
-Markdown is fast. Canvas LMS is slow. I have wasted hours of time on one class navigating to pages, clicking edit, clicking html, saving, publishing, etc.
+Canvas is often slow for repeated content work: creating pages, editing HTML, scheduling announcements, building assignments, and checking large sets of course objects. These scripts keep most reusable course material in plain text so it can be edited, copied to a future course, and versioned outside Canvas.
 
-With this project I write my content as I desire. I include images that are web hosted (e.g. amazon s3, b2, 3cmediasolutions, etc.) and use embed codes for videos. Another great embeddable resource is any kind of google doc or form.
+This is not a complete Canvas course management system. You should still review content in Canvas, publish or unpublish items intentionally, and check course settings, dates, modules, gradebook settings, and student-facing views manually.
 
-When I update content I can use any text editor to make the updates and then run a script to update that page on canvas.
+## Repository Layout
 
-### Repeatable
-
-I can run the script twice to update 2 courses in canvas. I have multiple sections of the same course.
-
-### I own my work
-
-You may be able to export your canvas course and keep a copy. Then you can import that to your new course and make changes as needed. I have found this time consuming for large courses I teach.
-
-You may not be able to delete your course content depending on settings of a particular college.
-
-In either case all of my work is in my course directory in plain text. I can make a copy of it and push it up to the next course.
-
-In many cases, the URL created will be copied to the clipboard for you to modify (announcements, assignments, discussions, and pages).
-
-## Is this a complete solution?
-
-Nope. This is a tool to help me with the parts that Canvas is bad at. I still have to login to the course to manage discussions and to publish modules (I prefer to do this manually)
-
-## Project Files
-
-<pre>
-canvas_scripts
+```text
+canvas_scripts/
 ├── README.md
-├── announcements
-│   └── README.md
-├── assignments
-│   └── README.md
-├── discussions
-│   └── README.md
-├── pages
-│   └── README.md
-└── scripts
+├── announcements/
+│   └── README.md
+├── assignments/
+│   └── README.md
+├── discussions/
+│   └── README.md
+├── gradebook_export/
+│   └── README.md
+├── pages/
+│   └── README.md
+└── scripts/
     ├── _chooseFile.py
-    ├── _credentials.py
+    ├── _credentials.example.py
+    ├── add_module_items.py
     ├── api_get_user_id.py
     ├── api_test.py
     ├── create_announcement.py
@@ -57,9 +43,13 @@ canvas_scripts
     ├── create_discussion_post.py
     ├── create_modules.py
     ├── create_multi_announcements.py
+    ├── create_multi_assignment.py
     ├── create_multi_pages.py
     ├── create_page.py
+    ├── generate_photo_roster.py
+    ├── get_assignment_contents.py
     ├── get_page_contents.py
+    ├── get_student_grades.py
     ├── list_assignments.py
     ├── list_courses.py
     ├── list_discussion_entries.py
@@ -70,43 +60,145 @@ canvas_scripts
     ├── list_students.py
     ├── update_multi_pages.py
     └── update_page.py
-</pre>
+```
 
-## Get started
+## Setup
 
-### Setup the course
+Install Python 3, then install the required packages used by the core and optional scripts:
 
-Start by opening the scripts folder and editing the `_credentials.py` file.
+```sh
+python3 -m pip install -r requirements.txt
+```
 
-Next run the `api_get_user_id.py` to make sure everything is working and to get your user ID. Put that in the `_credentials.py` file too.
+Packages included in the requirements:
 
-### Create a test page
+- `canvasapi` connects the create, update, list, and content scripts to Canvas.
+- `markdown` converts local Markdown files to HTML before sending them to Canvas.
+- `html2text` converts existing Canvas assignment HTML back into Markdown.
+- `requests` is used by the gradebook export script.
+- `pandas` writes gradebook data to parquet files.
+- `pyarrow` provides the parquet engine used by pandas.
 
-Create a test page in the pages folder in Markdown and run the create_page.py script.
+Next, create your local credentials file from the tracked example:
 
-usage with no filename:
+```sh
+cp scripts/_credentials.example.py scripts/_credentials.py
+```
 
-<pre>
+Then edit only `scripts/_credentials.py` for your Canvas instance and course:
+
+```python
+MY_PATH = "/path/to/your/course/folder/"
+API_URL = "https://your-college.instructure.com"
+API_KEY = "your Canvas access token"
+COURSE_NUM = 123456
+USER_ID = 123456
+```
+
+Canvas access tokens are created from Canvas profile settings. `COURSE_NUM` is the number in the course URL after `/courses/`.
+
+Do not put real credentials in `scripts/_credentials.example.py`. That file is committed to the repository and should keep template values only. Real credentials belong in `scripts/_credentials.py`, which is ignored by Git.
+
+After setting `API_URL`, `API_KEY`, and `COURSE_NUM`, run:
+
+```sh
+./scripts/api_get_user_id.py
+```
+
+Copy the printed user ID into `USER_ID` in `scripts/_credentials.py`.
+
+## Content Folders
+
+Put Markdown files in the matching folder:
+
+- `pages/` for Canvas pages
+- `assignments/` for assignment descriptions
+- `announcements/` for announcement bodies
+- `discussions/` for discussion prompts
+
+Use hosted image URLs and video embed codes in Markdown when possible. Canvas file uploads are not the main focus of these scripts.
+
+## Common Commands
+
+Create a Canvas page from a Markdown file:
+
+```sh
 ./scripts/create_page.py
-# this will provide a list of all markdown files in the pages folder
-# choose by number
-</pre>
+```
 
-usage with filename:
+Create a Canvas page by passing a file directly:
 
-<pre>
-./scripts/create_page.py pages/module-2-learning-guide.md
-# immediately prompts for the title
-</pre>
+```sh
+./scripts/create_page.py pages/example-page.md
+```
 
-## Requirements
+List current course objects:
 
-- Python 3
-- pip3 canvasapi
-- pip3 markdown
+```sh
+./scripts/list_pages.py
+./scripts/list_assignments.py
+./scripts/list_discussions.py
+./scripts/list_modules.py
+./scripts/list_quizzes.py
+```
+
+Create individual course objects:
+
+```sh
+./scripts/create_assignment.py
+./scripts/create_discussion_post.py
+./scripts/create_announcement.py
+```
+
+Update an existing Canvas page from a local Markdown file:
+
+```sh
+./scripts/update_page.py
+```
+
+Export Canvas content or course data:
+
+```sh
+./scripts/get_page_contents.py
+./scripts/get_assignment_contents.py
+./scripts/get_student_grades.py
+./scripts/generate_photo_roster.py
+```
+
+## Data Safety
+
+This repository should stay generic. Before sharing or committing a course copy, check that it does not include:
+
+- Real Canvas API tokens
+- Real values in `scripts/_credentials.example.py`
+- Real course IDs, assignment IDs, module IDs, page URLs, or user IDs
+- Student names, emails, grades, submissions, or photos
+- Generated gradebook exports
+- Generated photo roster files
+
+The scripts are intended to contain examples and placeholders only. Local course content and generated student data should be treated as private course records.
+
+## Script Notes
+
+Some scripts are interactive and ask you to select a file, enter a title, confirm a Canvas item, or enter a date. Announcement scheduling uses Canvas timestamps in ISO 8601 format, such as:
+
+```text
+2026-08-17T18:00:00Z
+```
+
+The multi-create scripts contain editable lists near the top of each file. Review those lists before running them so you know exactly what will be created in Canvas.
+
+`get_student_grades.py` can also read credentials from environment variables:
+
+```sh
+CANVAS_API_URL="https://your-college.instructure.com" \
+CANVAS_API_KEY="your Canvas access token" \
+CANVAS_COURSE_ID="123456" \
+./scripts/get_student_grades.py
+```
 
 ## Project Links
 
-- [UCFOPEN CanvasAPI Github](https://github.com/ucfopen/canvasapi)
+- [UCFOPEN CanvasAPI GitHub](https://github.com/ucfopen/canvasapi)
 - [CanvasAPI Documentation](https://canvasapi.readthedocs.io/en/stable/getting-started.html)
 - [Canvas LMS API Documentation](https://canvas.instructure.com/doc/api/index.html)
