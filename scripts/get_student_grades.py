@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import _venv
 """Pull a Canvas course gradebook through documented REST API resources.
 
 This module reconstructs the gradebook from assignments, student submissions,
@@ -9,6 +8,7 @@ Gradebook CSV export route.
 
 from __future__ import annotations
 
+import _venv
 import argparse
 import csv
 import importlib.util
