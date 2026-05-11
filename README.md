@@ -79,33 +79,15 @@ Packages included in the requirements:
 - `pandas` writes gradebook data to parquet files.
 - `pyarrow` provides the parquet engine used by pandas.
 
-Next, create your local credentials file from the tracked example:
+Next, set up your local credentials file by running the onboarding script:
 
 ```sh
-cp scripts/_credentials.example.py scripts/_credentials.py
+./setup_course.py
 ```
 
-Then edit only `scripts/_credentials.py` for your Canvas instance and course:
+This interactive script will ask for your `API_URL`, `API_KEY`, and `COURSE_NUM`. Canvas access tokens are created from Canvas profile settings. `COURSE_NUM` is the number in the course URL after `/courses/`.
 
-```python
-MY_PATH = "/path/to/your/course/folder/"
-API_URL = "https://your-college.instructure.com"
-API_KEY = "your Canvas access token"
-COURSE_NUM = 123456
-USER_ID = 123456
-```
-
-Canvas access tokens are created from Canvas profile settings. `COURSE_NUM` is the number in the course URL after `/courses/`.
-
-Do not put real credentials in `scripts/_credentials.example.py`. That file is committed to the repository and should keep template values only. Real credentials belong in `scripts/_credentials.py`, which is ignored by Git.
-
-After setting `API_URL`, `API_KEY`, and `COURSE_NUM`, run:
-
-```sh
-./scripts/api_get_user_id.py
-```
-
-Copy the printed user ID into `USER_ID` in `scripts/_credentials.py`.
+The setup script will automatically verify your connection, fetch your user ID, and generate your `scripts/_credentials.py` file. This file is intentionally ignored by Git so your real API tokens are not accidentally committed.
 
 ## Content Folders
 
