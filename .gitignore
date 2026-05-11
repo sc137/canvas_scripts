@@ -4,3 +4,4 @@ __pycache__/
 .env
 scripts/_credentials.py
 venv/
+archives/
