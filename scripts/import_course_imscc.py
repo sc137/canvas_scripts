@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import _venv
 # import_course_imscc.py
 # Imports an IMSCC archive into the Canvas course.
 

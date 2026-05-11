@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import _venv
 # add_module_items.py
 # Add URLs and text headers to a Canvas module.
 

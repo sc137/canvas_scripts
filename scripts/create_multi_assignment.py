@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import _venv
 # create_multi_assignment.py
 # sable cantus
 # Add many assignments to your shell

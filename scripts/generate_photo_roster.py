@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import _venv
 """Generate a Canvas photo roster page using scripts/_credentials.py.
 
 This script is intended to run from the scripts/ folder and read:

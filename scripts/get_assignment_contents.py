@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import _venv
 # get_assignment_contents.py
 # sable cantus
 # Get the contents of one or more assignments

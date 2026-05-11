@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import _venv
 """Pull a Canvas course gradebook through documented REST API resources.
 
 This module reconstructs the gradebook from assignments, student submissions,
