@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-import _venv
 # create_multi_announcements.py
 # sable cantus
 # create a discussion post from a mardown file
 # schedule multiple announcements
 
+import _venv
 import sys
 try:
     from canvasapi import Canvas

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import _venv
 # create_discussion_post.py
 # sable cantus
 # create a discussion post from a mardown file
 
+import _venv
 import os
 import sys
 import _chooseFile

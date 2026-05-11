@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import _venv
 # api_test.py
 # sable cantus
 # Run this to confirm everything is working 
 # and you have the correct class selected
 # This script will display your canvas user ID
 
+import _venv
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
 

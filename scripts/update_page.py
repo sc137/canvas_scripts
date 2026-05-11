@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-import _venv
 # update_page.py
 # sable cantus
 
+import _venv
 import os
 import _chooseFile
 from canvasapi import Canvas

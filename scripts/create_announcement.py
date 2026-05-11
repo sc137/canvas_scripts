@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import _venv
 # create_announcement.py
 # sable cantus
 # create a discussion post from a mardown file
 
+import _venv
 import sys
 import _chooseFile
 from canvasapi import Canvas

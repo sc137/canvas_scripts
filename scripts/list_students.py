@@ -1,8 +1,8 @@
 #!/usr/bin/env python3 
-import _venv
 # list_students.py
 # sable cantus
 
+import _venv
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
 

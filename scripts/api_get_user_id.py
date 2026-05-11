@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import _venv
 # api_get_current_user.py
 # sable cantus
 # Run this to get the user ID for the current user
 
+import _venv
 from canvasapi import Canvas
 from _credentials import API_URL, API_KEY, COURSE_NUM
 

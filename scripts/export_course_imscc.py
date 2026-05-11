@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-import _venv
 # export_course_imscc.py
 # Exports the Canvas course to an IMSCC archive.
 
+import _venv
 import os
 import sys
 import time
