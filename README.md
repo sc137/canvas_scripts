@@ -64,30 +64,27 @@ canvas_scripts/
 
 ## Setup
 
-Install Python 3, then install the required packages used by the core and optional scripts:
-
-```sh
-python3 -m pip install -r requirements.txt
-```
-
-Packages included in the requirements:
-
-- `canvasapi` connects the create, update, list, and content scripts to Canvas.
-- `markdown` converts local Markdown files to HTML before sending them to Canvas.
-- `html2text` converts existing Canvas assignment HTML back into Markdown.
-- `requests` is used by the gradebook export script.
-- `pandas` writes gradebook data to parquet files.
-- `pyarrow` provides the parquet engine used by pandas.
-
-Next, set up your local credentials file by running the onboarding script:
+Ensure you have Python 3 installed, then run the interactive onboarding script from the repository root:
 
 ```sh
 ./setup_course.py
 ```
 
-This interactive script will ask for your `API_URL`, `API_KEY`, and `COURSE_NUM`. Canvas access tokens are created from Canvas profile settings. `COURSE_NUM` is the number in the course URL after `/courses/`.
+This script will automatically create a Python virtual environment (`venv/`), install all required packages, and ask you for your `API_URL`, `API_KEY`, and `COURSE_NUM`. Canvas access tokens are created from Canvas profile settings. `COURSE_NUM` is the number in the course URL after `/courses/`.
 
-The setup script will automatically verify your connection, fetch your user ID, and generate your `scripts/_credentials.py` file. This file is intentionally ignored by Git so your real API tokens are not accidentally committed.
+Packages automatically installed include:
+
+- `canvasapi` connects the create, update, list, and content scripts to Canvas.
+- `markdown` converts local Markdown files to HTML before sending them to Canvas.
+- `html2text` converts existing Canvas assignment HTML back into Markdown.
+- `requests` is used by the gradebook export and native IMSCC scripts.
+- `pandas` writes gradebook data to parquet files.
+- `pyarrow` provides the parquet engine used by pandas.
+
+The setup script will then verify your connection, fetch your user ID, and generate your `scripts/_credentials.py` file. This file is intentionally ignored by Git so your real API tokens are not accidentally committed.
+
+> [!TIP]
+> **No manual activation needed!** You do not need to run `source venv/bin/activate`. Thanks to our auto-restarting architecture, you can simply run any script normally (e.g., `./scripts/list_pages.py`), and it will instantly detect and use the virtual environment for you.
 
 ## Content Folders
 
