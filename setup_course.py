@@ -33,35 +33,67 @@ def main():
     print("This script will help you configure your local course credentials.")
     print("It will generate the '_credentials.py' file required by the other scripts.\n")
 
-    # 1. Path
-    # Auto-detect root dir (assuming this script is in canvas_scripts/)
+    # Auto-detect root dir
     root_dir = os.path.dirname(os.path.abspath(__file__)) + '/'
     
+    existing_creds = {}
+    cred_file = os.path.join(root_dir, 'scripts', '_credentials.py')
+    if os.path.exists(cred_file):
+        try:
+            sys.path.insert(0, os.path.join(root_dir, 'scripts'))
+            import _credentials
+            existing_creds['MY_PATH'] = getattr(_credentials, 'MY_PATH', root_dir)
+            existing_creds['API_URL'] = getattr(_credentials, 'API_URL', '')
+            existing_creds['API_KEY'] = getattr(_credentials, 'API_KEY', '')
+            existing_creds['COURSE_NUM'] = getattr(_credentials, 'COURSE_NUM', '')
+            sys.path.pop(0)
+            print("=> Found existing _credentials.py. Press Enter to keep current values.\n")
+        except Exception:
+            if 'scripts' in sys.path[0]:
+                sys.path.pop(0)
+
+    # 1. Path
     print("1. Local Course Path")
-    print(f"We detected your course folder as: {root_dir}")
-    my_path = input("Press Enter to accept this, or type the full path: ").strip()
+    default_path = existing_creds.get('MY_PATH', root_dir)
+    print(f"Default: {default_path}")
+    my_path = input("Press Enter to accept, or type the full path: ").strip()
     if not my_path:
-        my_path = root_dir
+        my_path = default_path
     if not my_path.endswith('/'):
         my_path += '/'
 
     # 2. API_URL
     print("\n2. Canvas API URL")
-    print("This is the base URL you use to log in to Canvas.")
     print("Example: https://example.instructure.com")
+    default_url = existing_creds.get('API_URL', '')
+    if default_url:
+        print(f"Current: {default_url}")
     api_url = input("API URL: ").strip()
+    if not api_url and default_url:
+        api_url = default_url
     api_url = api_url.rstrip('/')
 
     # 3. API_KEY
     print("\n3. Canvas API Key")
     print("Go to your Canvas profile Settings -> 'New Access Token' to generate this.")
+    default_key = existing_creds.get('API_KEY', '')
+    if default_key:
+        print(f"Current: {'*' * 10}{default_key[-4:] if len(default_key) > 4 else ''}")
     api_key = input("API Key: ").strip()
+    if not api_key and default_key:
+        api_key = default_key
 
     # 4. COURSE_NUM
     print("\n4. Course Number")
-    print("Go to your Canvas course home page. The course number is the number in the URL after /courses/")
     print("Example: For https://example.instructure.com/courses/123456, enter 123456")
+    default_course = existing_creds.get('COURSE_NUM', '')
+    if default_course:
+        print(f"Current: {default_course}")
+        
     course_num_input = input("Course Number: ").strip()
+    if not course_num_input and default_course:
+        course_num_input = str(default_course)
+        
     while not course_num_input.isdigit():
         print("Please enter digits only.")
         course_num_input = input("Course Number: ").strip()
