@@ -4,6 +4,19 @@
 # Copy this file to _credentials.py and fill in your local Canvas settings.
 # Do not commit _credentials.py with real API credentials or course IDs.
 
+import os
+import sys
+
+# Auto-restart in virtual environment if needed
+def _ensure_venv():
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    venv_python = os.path.join(root_dir, 'venv', 'bin', 'python')
+    if os.name == 'nt':
+        venv_python = os.path.join(root_dir, 'venv', 'Scripts', 'python.exe')
+    if os.path.exists(venv_python) and os.path.abspath(sys.executable) != os.path.abspath(venv_python):
+        os.execv(venv_python, [venv_python] + sys.argv)
+_ensure_venv()
+
 # Set your system path to this course folder.
 # Include the trailing slash.
 MY_PATH = "/path/to/your/course/folder/"
