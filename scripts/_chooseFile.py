@@ -1,6 +1,3 @@
-################
-# _chooseFile.py
-#
 # Call this to list and choose files
 # sable cantus
 # import _chooseFile
@@ -18,29 +15,33 @@ def chooseFile(directory_name):
         exit()
 
     # Select a file to work with
-    print("Please select a file by number:")
-
     os.chdir(directory_name)
     path = os.getcwd()
-    dir = os.listdir(path)
-    for i in sorted(dir):
-        print(dir.index(i)+1, "-", i)
+    dir_list = sorted(os.listdir(path))
 
-    length = len(dir)
-    selection = input("Your selection: ")
-    selection = int(selection)
-    file_name = dir[selection-1]
-    print("You selected: ", file_name)
+    while True:
+        print("Please select a file by number:")
+        for i, item in enumerate(dir_list):
+            print(i + 1, "-", item)
 
-    user_choice = input("Is this correct? (y/n/q) ")
-    if user_choice.lower() == 'y':
-        pass
-    elif user_choice.lower() == 'q':
-        print("Goodbye")
-        exit()
-    else:
-        print("Goodbye. Please try again.")
-        exit()
+        selection = input("Your selection: ")
+        try:
+            selection = int(selection)
+            file_name = dir_list[selection-1]
+        except (ValueError, IndexError):
+            print("Invalid selection. Please try again.\n")
+            continue
+
+        print("You selected: ", file_name)
+
+        user_choice = input("Is this correct? (y/n/q) ")
+        if user_choice.lower() == 'y':
+            break
+        elif user_choice.lower() == 'q':
+            print("Goodbye")
+            exit()
+        else:
+            print("Please try again.\n")
 
     # Choose a title
     title = input("Please select your page title (blank to ignore): ")
@@ -58,7 +59,3 @@ def delayPost():
     delayed_post = input("Please enter the time to post: ")
     return delayed_post
 
-##############################################################################
-# TODO
-# [ ] Allow user to select a different page if they choose 'n'
-# [X] Sort the directory alpha - it's random in the array

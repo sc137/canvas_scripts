@@ -28,14 +28,10 @@ print()
 # run list_assignments.py to find IDs
 # leave empty to use the interactive menu
 assignment_ids = [
-    3243356,
-    3243359,
-    3243360,
-    3243363,
-    3243361,
-    3243362,
-    3243357,
-    3243358
+    1234567,
+    1234568,
+    1234569,
+    1234560
 ]
 
 #########################################

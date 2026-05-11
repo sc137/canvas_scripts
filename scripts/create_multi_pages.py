@@ -46,9 +46,3 @@ for new_page in new_pages:
 if not_created != "":
     print("Not created:\n", not_created)
 
-##########
-# TODO
-#
-# [X] read html from file when creating page
-# [X] create multiple pages from an array
-##########

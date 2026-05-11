@@ -30,7 +30,7 @@ print()
 
 announcements = [
     # ['Announcement 1', 'announcement1.md','2024-08-07T18:00:00Z'],
-    ['','','']
+    # ['','','']
 ]
 
 for announcement in announcements:

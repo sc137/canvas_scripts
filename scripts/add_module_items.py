@@ -1,51 +1,99 @@
 #!/usr/bin/env python3
 # add_module_items.py
-# sable cantus
-# add URLs and text items to a module
+# Add URLs and text headers to a Canvas module.
+
+import sys
 
 from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
+from _credentials import API_URL, API_KEY, COURSE_NUM
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
+##############################################################################
+# Script settings
+#
+# Set MODULE_ID to run without prompts. If MODULE_ID is None, the script will
+# list the course modules and ask which one to update.
+#
+# Run list_modules.py to see module IDs ahead of time.
+##############################################################################
 
-# get a specific course 
-course = canvas.get_course(COURSE_NUM)
-print("Selected course: \n", course.name)
-print()
+MODULE_ID = None
 
-# get a specific module id to add items to
-module_id = ######
-module = course.get_module(module_id)
-print(module)
+MODULE_ITEMS = [
+    # {
+    #     "type": "SubHeader",
+    #     "title": "Text Header Title",
+    #     "position": 1,
+    #     "indent": 0,
+    #     "published": True,
+    # },
+    # {
+    #     "type": "ExternalUrl",
+    #     "title": "Example Resource",
+    #     "external_url": "https://example.com/",
+    #     "position": 2,
+    #     "indent": 1,
+    #     "published": True,
+    #     "new_tab": True,
+    # },
+]
 
-# You can add text headers or URLs
 
-# Create a text header with indentation specified
-title = 'Text Header Title'
+def choose_module(course):
+    modules = list(course.get_modules())
+    if not modules:
+        sys.exit("No modules found in this course.")
 
-# Step 1: Create a text item
-item = module.create_module_item({
-    'type': 'SubHeader',
-    'title': title,
-    'position': 1,  # Position in the module
-    'indent': 0,  # Indentation level
-})
+    print("Select a module:")
+    for index, module in enumerate(modules, start=1):
+        print(f"{index} - {module.name} (id: {module.id})")
 
-print(item, item.id)
+    selection = input("Your selection: ").strip()
+    try:
+        selected_index = int(selection)
+        return modules[selected_index - 1]
+    except (ValueError, IndexError):
+        sys.exit("Invalid module selection.")
 
-# Step 2: Publish the item
-item_id = module.get_module_item(item.id)  # Get the newly created item ID
-item_id.edit(module_item={'published': True})  # Publish the item
 
-# Create an external URL item and specificy indentation
-module.create_module_item({
-    'type': 'ExternalUrl',
-    'title': 'Your external URL',
-    'external_url': 'https://example.com/',
-    'indent': 1,  # Indentation level
-})
+def clean_module_item(item_settings):
+    module_item = {
+        "type": item_settings["type"],
+        "title": item_settings["title"],
+    }
 
-# Publish the URL in the module
-item_id = module.get_module_item(item.id)  # Get the newly created item ID
-item_id.edit(module_item={'published': True})  # Publish the item
+    for key in ("position", "indent", "external_url", "new_tab"):
+        if key in item_settings and item_settings[key] is not None:
+            module_item[key] = item_settings[key]
+
+    return module_item
+
+
+def main():
+    if not MODULE_ITEMS:
+        sys.exit("No module items configured. Add items to MODULE_ITEMS first.")
+
+    canvas = Canvas(API_URL, API_KEY)
+    course = canvas.get_course(COURSE_NUM)
+    print("Selected course: \n", course.name)
+    print()
+
+    if MODULE_ID is None:
+        module = choose_module(course)
+    else:
+        module = course.get_module(MODULE_ID)
+
+    print("Selected module:", module)
+    print()
+
+    for item_settings in MODULE_ITEMS:
+        item = module.create_module_item(clean_module_item(item_settings))
+        print("Created:", item, item.id)
+
+        if item_settings.get("published", False):
+            created_item = module.get_module_item(item.id)
+            created_item.edit(module_item={"published": True})
+            print("Published:", created_item)
+
+
+if __name__ == "__main__":
+    main()
