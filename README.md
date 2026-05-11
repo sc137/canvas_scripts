@@ -144,19 +144,6 @@ Export Canvas content or course data:
 ./scripts/generate_photo_roster.py
 ```
 
-## Data Safety
-
-This repository should stay generic. Before sharing or committing a course copy, check that it does not include:
-
-- Real Canvas API tokens
-- Real values in `scripts/_credentials.example.py`
-- Real course IDs, assignment IDs, module IDs, page URLs, or user IDs
-- Student names, emails, grades, submissions, or photos
-- Generated gradebook exports
-- Generated photo roster files
-
-The scripts are intended to contain examples and placeholders only. Local course content and generated student data should be treated as private course records.
-
 ## Script Notes
 
 Some scripts are interactive and ask you to select a file, enter a title, confirm a Canvas item, or enter a date. Announcement scheduling uses Canvas timestamps in ISO 8601 format, such as:
@@ -167,17 +154,10 @@ Some scripts are interactive and ask you to select a file, enter a title, confir
 
 The multi-create scripts contain editable lists near the top of each file. Review those lists before running them so you know exactly what will be created in Canvas.
 
-`get_student_grades.py` can also read credentials from environment variables:
-
-```sh
-CANVAS_API_URL="https://your-college.instructure.com" \
-CANVAS_API_KEY="your Canvas access token" \
-CANVAS_COURSE_ID="123456" \
-./scripts/get_student_grades.py
-```
-
 ## Project Links
 
 - [UCFOPEN CanvasAPI GitHub](https://github.com/ucfopen/canvasapi)
 - [CanvasAPI Documentation](https://canvasapi.readthedocs.io/en/stable/getting-started.html)
 - [Canvas LMS API Documentation](https://canvas.instructure.com/doc/api/index.html)
+
+*Do we even need to mention that AI tools have read, reviewed, or updated any of the code here? Well, it has.*
