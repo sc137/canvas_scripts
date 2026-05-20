@@ -44,6 +44,7 @@ canvas_scripts/
     ├── create_modules.py
     ├── create_multi_announcements.py
     ├── create_multi_assignment.py
+    ├── create_multi_discussions.py
     ├── create_multi_pages.py
     ├── create_page.py
     ├── generate_photo_roster.py
@@ -127,6 +128,15 @@ Create individual course objects:
 ./scripts/create_assignment.py
 ./scripts/create_discussion_post.py
 ./scripts/create_announcement.py
+```
+
+Create multiple course objects from editable lists in the scripts:
+
+```sh
+./scripts/create_multi_pages.py
+./scripts/create_multi_assignment.py
+./scripts/create_multi_discussions.py
+./scripts/create_multi_announcements.py
 ```
 
 Update an existing Canvas page from a local Markdown file:
