@@ -6,11 +6,8 @@ import _venv
 import sys
 import _chooseFile
 import markdown
-import _chooseFile
-import markdown
 import os
-from _client import get_canvas_and_course, upload_and_replace_assets
-from _credentials import MY_PAGES
+from _client import get_canvas_and_course, upload_and_replace_assets, MY_PAGES
 
 # Initiate Canvas and Course
 _, course = get_canvas_and_course()

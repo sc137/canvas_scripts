@@ -4,11 +4,9 @@
 
 import _venv
 import os
-import os
 import _chooseFile
 import markdown
-from _client import get_canvas_and_course, choose_item, upload_and_replace_assets
-from _credentials import API_URL, COURSE_NUM, MY_PAGES
+from _client import get_canvas_and_course, choose_item, upload_and_replace_assets, API_URL, COURSE_NUM, MY_PAGES
 
 # Initiate Canvas and Course
 _, course = get_canvas_and_course()

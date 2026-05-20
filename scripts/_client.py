@@ -3,7 +3,17 @@ import re
 import sys
 from urllib.parse import urlparse
 from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM
+from _credentials import (
+    API_URL,
+    API_KEY,
+    COURSE_NUM,
+    USER_ID,
+    MY_PATH,
+    MY_PAGES,
+    MY_ANNOUNCEMENTS,
+    MY_DISCUSSIONS,
+    MY_ASSIGNMENTS,
+)
 
 def get_canvas_and_course():
     """Initializes the Canvas API client and fetches the configured Course."""
