@@ -7,23 +7,15 @@ import _venv
 import os
 import sys
 
-try:
-    from canvasapi import Canvas
-except:
-    print("Please install the canvasapi")
-    sys.exit(0)
+
 try:
     import markdown
 except:
     print("Please install markdown")
     sys.exit(0)
-from _credentials import API_URL, API_KEY, COURSE_NUM, MY_DISCUSSIONS
+from _client import get_canvas_and_course, MY_DISCUSSIONS
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
-
-# get a specific course
-course = canvas.get_course(COURSE_NUM)
+canvas, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
 print()
 

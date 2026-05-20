@@ -24,10 +24,12 @@ from urllib.parse import urljoin
 import requests
 
 try:
-    from _credentials import API_KEY as DEFAULT_API_KEY
-    from _credentials import API_URL as DEFAULT_API_URL
-    from _credentials import COURSE_NUM as DEFAULT_COURSE_ID
-    from _credentials import MY_PATH as DEFAULT_COURSE_PATH
+    from _client import (
+        API_KEY as DEFAULT_API_KEY,
+        API_URL as DEFAULT_API_URL,
+        COURSE_NUM as DEFAULT_COURSE_ID,
+        MY_PATH as DEFAULT_COURSE_PATH,
+    )
 except Exception:
     DEFAULT_API_KEY = None
     DEFAULT_API_URL = None

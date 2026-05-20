@@ -6,14 +6,9 @@
 # This script will display your canvas user ID
 
 import _venv
-from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
+from _client import get_canvas_and_course, USER_ID
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
-
-# get a specific course 
-course = canvas.get_course(COURSE_NUM)
+canvas, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
 print()
 

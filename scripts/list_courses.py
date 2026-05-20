@@ -3,11 +3,10 @@
 # sable cantus
 
 import _venv
-from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID
+from _client import get_canvas_and_course, USER_ID
 
 # Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
+canvas, _ = get_canvas_and_course()
 
 # get courses for a user
 user = canvas.get_user(USER_ID)

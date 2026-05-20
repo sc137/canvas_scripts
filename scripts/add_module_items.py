@@ -5,8 +5,7 @@
 import _venv
 import sys
 
-from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM
+from _client import get_canvas_and_course
 
 ##############################################################################
 # Script settings
@@ -73,8 +72,8 @@ def main():
     if not MODULE_ITEMS:
         sys.exit("No module items configured. Add items to MODULE_ITEMS first.")
 
-    canvas = Canvas(API_URL, API_KEY)
-    course = canvas.get_course(COURSE_NUM)
+    canvas, _ = get_canvas_and_course()
+    _, course = get_canvas_and_course()
     print("Selected course: \n", course.name)
     print()
 

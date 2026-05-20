@@ -10,14 +10,9 @@ import requests
 from datetime import datetime
 
 try:
-    from canvasapi import Canvas
+    from _client import get_canvas_and_course, MY_PATH
 except ImportError:
-    sys.exit("Please run setup_course.py to install requirements.")
-
-try:
-    from _credentials import API_URL, API_KEY, COURSE_NUM, MY_PATH
-except ImportError:
-    sys.exit("Please run setup_course.py to create _credentials.py")
+    sys.exit("Please run setup_course.py to install requirements and create _credentials.py")
 
 # Ensure archives directory exists
 ARCHIVES_DIR = os.path.join(MY_PATH, "archives")
@@ -25,8 +20,7 @@ if not os.path.exists(ARCHIVES_DIR):
     os.makedirs(ARCHIVES_DIR)
 
 def main():
-    canvas = Canvas(API_URL, API_KEY)
-    course = canvas.get_course(COURSE_NUM)
+    canvas, course = get_canvas_and_course()
     print(f"Selected course: {course.name}")
     print("Initiating IMSCC export... this may take a few minutes.")
 

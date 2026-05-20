@@ -20,12 +20,7 @@ from typing import Any, Dict, Iterable, List, Optional
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-from _credentials import API_KEY, API_URL, COURSE_NUM  # type: ignore
-
-try:
-    from _credentials import MY_PATH  # type: ignore
-except ImportError:
-    MY_PATH = None
+from _client import API_KEY, API_URL, COURSE_NUM, MY_PATH  # type: ignore
 
 
 def default_output_dir() -> Path:

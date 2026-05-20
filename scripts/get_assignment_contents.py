@@ -13,14 +13,9 @@ try:
 except ImportError:
     sys.exit('dependency needed: $ pip3 install html2text')
 
-from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, MY_ASSIGNMENTS
+from _client import get_canvas_and_course, MY_ASSIGNMENTS
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
-
-# get a specific course
-course = canvas.get_course(COURSE_NUM)
+canvas, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
 print()
 
