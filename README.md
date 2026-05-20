@@ -61,7 +61,8 @@ canvas_scripts/
     ├── list_quizzes.py
     ├── list_students.py
     ├── update_multi_pages.py
-    └── update_page.py
+    ├── update_page.py
+    └── upload_files.py
 ```
 
 ## Setup
@@ -144,6 +145,16 @@ Update an existing Canvas page from a local Markdown file:
 
 ```sh
 ./scripts/update_page.py
+```
+
+Upload local files or directories directly to Canvas files:
+
+```sh
+# Upload a single PowerPoint file to course root files
+./scripts/upload_files.py lectures/week1.pptx
+
+# Upload all files in a directory to a "Lectures" folder in Canvas
+./scripts/upload_files.py lectures/ --folder Lectures
 ```
 
 Export Canvas content or course data:
