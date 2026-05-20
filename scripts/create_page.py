@@ -6,14 +6,14 @@ import _venv
 import sys
 import _chooseFile
 import markdown
-from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, MY_PAGES
+import _chooseFile
+import markdown
+import os
+from _client import get_canvas_and_course, upload_and_replace_assets
+from _credentials import MY_PAGES
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
-
-# get a specific course
-course = canvas.get_course(COURSE_NUM)
+# Initiate Canvas and Course
+_, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
 print()
 
@@ -29,7 +29,15 @@ else:
 # read the body from a markdown file
 with open(file_name, "r", encoding="utf-8") as input_file:
     text = input_file.read()
+
+# Convert markdown to HTML
 page_body = markdown.markdown(text, extensions=['sane_lists'])
+
+# Get markdown file's folder to resolve local assets
+markdown_dir = os.path.dirname(os.path.abspath(file_name))
+
+# Scan and upload local assets, replacing their URLs
+page_body = upload_and_replace_assets(page_body, course, markdown_dir)
 
 # create the page
 new_page = course.create_page({

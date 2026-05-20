@@ -4,52 +4,32 @@
 
 import _venv
 import os
+import os
 import _chooseFile
-from canvasapi import Canvas
 import markdown
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_PAGES
+from _client import get_canvas_and_course, choose_item, upload_and_replace_assets
+from _credentials import API_URL, COURSE_NUM, MY_PAGES
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
-
-# get a specific course 
-course = canvas.get_course(COURSE_NUM)
+# Initiate Canvas and Course
+_, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
 print()
 
 #########################################
 # get a specific page to update
 #
-# list all pages
 print("Select a page to update:")
-page_list = course.get_pages(sort="title")
+pages = list(course.get_pages(sort="title"))
 
-# drop the paginated list into pages
-pages = []
-for i in page_list:
-    pages.append(i)
+# Sort pages by URL to match original behavior
+pages.sort(key=lambda p: p.url)
 
-# drop page urls and sort
-page_urls = []
-for page in pages:
-    page_urls.append(page.url)
-page_urls.sort()
-
-length = len(page_urls)
-#print("There are", length, "pages.")
-# print the sorted urls
-for url in page_urls:
-    print(page_urls.index(url)+1, "-", url)
-
-selection = input("Your selection: ")
-selection = int(selection)
-page_url = page_urls[selection-1]
+selected_page = choose_item(pages, display_attr="url")
+page_url = selected_page.url
 print("You selected: ", page_url)
 
 user_choice = input("Is this correct? (y/n) ")
-if user_choice.lower() == 'y':
-    pass
-else:
+if user_choice.lower() != 'y':
     exit()
 print()
 
@@ -64,10 +44,15 @@ title, file_name = _chooseFile.chooseFile(MY_PAGES)
 os.chdir(MY_PAGES)
 with open(file_name, "r", encoding="utf-8") as input_file:
     text = input_file.read()
+
+# Convert markdown to HTML
 updated_body = markdown.markdown(text, extensions=['sane_lists'])
 
-# help from the slack channel - this cmd works
-# page.edit(wiki_page={"title": "Updated title", "body": "Updated body."})
+# Get markdown file's folder to resolve local assets
+markdown_dir = os.path.dirname(os.path.abspath(file_name))
+
+# Scan and upload local assets, replacing their URLs
+updated_body = upload_and_replace_assets(updated_body, course, markdown_dir)
 
 page.edit(wiki_page={
     "body": updated_body}
@@ -75,3 +60,4 @@ page.edit(wiki_page={
 
 updated_page_url = API_URL + "/courses/" + str(COURSE_NUM) + "/pages/" + page_url
 print("Updated: ", updated_page_url)
+

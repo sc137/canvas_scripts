@@ -4,15 +4,12 @@
 
 import _venv
 import os
-from canvasapi import Canvas
 import markdown
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_PAGES
+from _client import get_canvas_and_course, upload_and_replace_assets
+from _credentials import API_URL, COURSE_NUM, MY_PAGES
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
-
-# get a specific course
-course = canvas.get_course(COURSE_NUM)
+# Initiate Canvas and Course
+_, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
 print()
 
@@ -22,6 +19,9 @@ updated_pages = [
     # ['', '']
 ]
 
+# catch errors
+not_found = ""
+
 for updated_page in updated_pages:
     page_url = updated_page[0]
     file_name = updated_page[1]
@@ -30,7 +30,6 @@ for updated_page in updated_pages:
     page = course.get_page(page_url)
 
     os.chdir(MY_PAGES)
-    not_found = ""
     try:
         with open(file_name, "r", encoding="utf-8") as input_file:
             text = input_file.read()
@@ -39,6 +38,10 @@ for updated_page in updated_pages:
         # any pages that are present when this loop is run
         # will be added to the not_found and displayed later
         not_found += file_name + "\n"
+        continue
+
+    # Scan and upload local assets, replacing their URLs
+    updated_body = upload_and_replace_assets(updated_body, course, MY_PAGES)
 
     page.edit(wiki_page={
         "body": updated_body}

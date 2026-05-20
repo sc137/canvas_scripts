@@ -6,14 +6,12 @@
 import _venv
 import os
 import markdown
-from canvasapi import Canvas
-from _credentials import API_URL, API_KEY, COURSE_NUM, USER_ID, MY_PAGES
+import markdown
+from _client import get_canvas_and_course, upload_and_replace_assets
+from _credentials import MY_PAGES
 
-# Initiate the new Canvas object
-canvas = Canvas(API_URL, API_KEY)
-
-# get a specific course 
-course = canvas.get_course(COURSE_NUM)
+# Initiate Canvas and Course
+_, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
 print()
 
@@ -22,28 +20,34 @@ new_pages = [
         ['Testing Multipage Script', 'test1.md']
         ]
 
+# catch errors
+not_created = ""
+
 # create many pages from the array and convert md to html
 for new_page in new_pages:
     page_title = new_page[0]
-
-    # read the body from a markdown file 
     page_file = new_page[1]
+    
     os.chdir(MY_PAGES)
-    # catch errors
-    not_created = ""
     try:
         with open(page_file, "r", encoding="utf-8") as input_file:
             text = input_file.read()
-        page_body = markdown.markdown(text)
+        page_body = markdown.markdown(text, extensions=['sane_lists'])
     except FileNotFoundError:
         not_created += page_file + "\n"
+        continue
 
-    course.create_page({
+    # Scan and upload local assets, replacing their URLs
+    page_body = upload_and_replace_assets(page_body, course, MY_PAGES)
+
+    # create the page
+    created_page = course.create_page({
         'title': page_title,
         'body': page_body,
         'published': True})
-    print(new_page)
+    print("Created:", created_page)
 
 if not_created != "":
     print("Not created:\n", not_created)
+
 
