@@ -34,6 +34,7 @@ canvas_scripts/
 │   └── README.md
 └── scripts/
     ├── _chooseFile.py
+    ├── _client.py
     ├── _credentials.example.py
     ├── add_module_items.py
     ├── api_get_user_id.py
@@ -96,7 +97,7 @@ Put Markdown files in the matching folder:
 - `announcements/` for announcement bodies
 - `discussions/` for discussion prompts
 
-Use hosted image URLs and video embed codes in Markdown when possible. Canvas file uploads are not the main focus of these scripts.
+You can use hosted image URLs or local relative image paths (e.g., `![diagram](images/diagram.png)`) in your Markdown. When creating or updating course pages, the scripts will automatically upload any referenced local images to the course's `uploaded_assets` folder in Canvas and replace the local paths with Canvas-hosted preview links.
 
 ## Common Commands
 
