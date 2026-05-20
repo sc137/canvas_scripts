@@ -97,7 +97,7 @@ Put Markdown files in the matching folder:
 - `announcements/` for announcement bodies
 - `discussions/` for discussion prompts
 
-You can use hosted image URLs or local relative image paths (e.g., `![diagram](images/diagram.png)`) in your Markdown. When creating or updating course pages, the scripts will automatically upload any referenced local images to the course's `uploaded_assets` folder in Canvas and replace the local paths with Canvas-hosted preview links.
+You can use hosted image URLs or local relative image paths (e.g., `![diagram](images/diagram.png)`) in your Markdown. When creating or updating course pages or announcements, the scripts will automatically upload any referenced local images to the course's `uploaded_assets` folder in Canvas and replace the local paths with Canvas-hosted preview links.
 
 ## Common Commands
 
