@@ -23,19 +23,7 @@ print()
 # https://mtsac.instructure.com/courses/XXXXXX/discussion_topics/DISCUSSION_ID
 discussions = [
     # ['discussion_id', 'file_name.md'],
-    ['2112559', '02-reflection.md'],
-    ['2112560', '03-reflection.md'],
-    ['2112562', '04-reflection.md'],
-    ['2112563', '05-reflection.md'],
-    ['2112564', '06-reflection.md'],
-    ['2112565', '07-reflection.md'],
-    ['2112566', '08-reflection.md'],
-    ['2112567', '09-reflection.md'],
-    ['2112568', '10-reflection.md'],
-    ['2112569', '11-reflection.md'],
-    ['2112570', '12-reflection.md'],
-    ['2112571', '13-reflection.md'],
-    ['2112572', '14-reflection.md'],
+
 ]
 
 not_found = ""
