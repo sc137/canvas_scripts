@@ -8,7 +8,7 @@ import sys
 import _chooseFile
 import os
 import markdown
-from _client import get_canvas_and_course, upload_and_replace_assets, MY_ANNOUNCEMENTS
+from _client import get_canvas_and_course, resolve_content_path, upload_and_replace_assets, MY_ANNOUNCEMENTS
 
 # Initiate Canvas and Course
 _, course = get_canvas_and_course()
@@ -29,12 +29,13 @@ else:
 delayed_post = _chooseFile.delayPost()
 
 # read in the message from a markdown file
-with open(file_name, "r", encoding="utf-8") as input_file:
+markdown_path = resolve_content_path(file_name, MY_ANNOUNCEMENTS)
+with open(markdown_path, "r", encoding="utf-8") as input_file:
     text = input_file.read()
 message = markdown.markdown(text, extensions=['sane_lists'])
 
 # Get markdown file's folder to resolve local assets
-markdown_dir = os.path.dirname(os.path.abspath(file_name))
+markdown_dir = os.path.dirname(markdown_path)
 
 # Scan and upload local assets, replacing their URLs
 message = upload_and_replace_assets(message, course, markdown_dir)

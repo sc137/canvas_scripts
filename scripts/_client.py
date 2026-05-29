@@ -36,6 +36,14 @@ def choose_item(items, display_attr="name"):
     except (ValueError, IndexError):
         sys.exit("Invalid selection.")
 
+def resolve_content_path(file_name, content_dir):
+    """Resolve a content filename from either the current directory or its content folder."""
+    if os.path.isabs(file_name):
+        return file_name
+    if os.path.exists(file_name):
+        return os.path.abspath(file_name)
+    return os.path.abspath(os.path.join(content_dir, file_name))
+
 def upload_and_replace_assets(html_content, course, markdown_dir):
     """
     Parses HTML content for local img src attributes, uploads them to Canvas,

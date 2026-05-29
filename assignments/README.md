@@ -1,3 +1,3 @@
-Create a markdown fle for each assignment here.
+Create a markdown file for each assignment here.
 
-Use static urls for images and embed video code.
+Use hosted image URLs, local relative image paths, and embed video code. Local images are uploaded to Canvas when you run the assignment creation scripts.

@@ -7,7 +7,7 @@ import sys
 import _chooseFile
 import markdown
 import os
-from _client import get_canvas_and_course, upload_and_replace_assets, MY_PAGES
+from _client import get_canvas_and_course, resolve_content_path, upload_and_replace_assets, MY_PAGES
 
 # Initiate Canvas and Course
 _, course = get_canvas_and_course()
@@ -24,14 +24,15 @@ else:
     title, file_name = _chooseFile.chooseFile(MY_PAGES)
 
 # read the body from a markdown file
-with open(file_name, "r", encoding="utf-8") as input_file:
+markdown_path = resolve_content_path(file_name, MY_PAGES)
+with open(markdown_path, "r", encoding="utf-8") as input_file:
     text = input_file.read()
 
 # Convert markdown to HTML
 page_body = markdown.markdown(text, extensions=['sane_lists'])
 
 # Get markdown file's folder to resolve local assets
-markdown_dir = os.path.dirname(os.path.abspath(file_name))
+markdown_dir = os.path.dirname(markdown_path)
 
 # Scan and upload local assets, replacing their URLs
 page_body = upload_and_replace_assets(page_body, course, markdown_dir)

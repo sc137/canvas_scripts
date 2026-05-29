@@ -6,7 +6,8 @@ import _venv
 import sys
 import _chooseFile
 import markdown
-from _client import get_canvas_and_course, MY_ASSIGNMENTS
+import os
+from _client import get_canvas_and_course, resolve_content_path, upload_and_replace_assets, MY_ASSIGNMENTS
 
 canvas, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
@@ -25,9 +26,12 @@ print(title)
 print(file_name)
 
 # read the body from a markdown file
-with open(file_name, "r", encoding="utf-8") as input_file:
+markdown_path = resolve_content_path(file_name, MY_ASSIGNMENTS)
+with open(markdown_path, "r", encoding="utf-8") as input_file:
     text = input_file.read()
 page_body = markdown.markdown(text, extensions=['sane_lists'])
+markdown_dir = os.path.dirname(markdown_path)
+page_body = upload_and_replace_assets(page_body, course, markdown_dir)
 
 points_possible = input("How many points for this? ")
 

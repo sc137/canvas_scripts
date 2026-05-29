@@ -25,10 +25,10 @@ not_created = ""
 for new_page in new_pages:
     page_title = new_page[0]
     page_file = new_page[1]
+    markdown_path = os.path.join(MY_PAGES, page_file)
     
-    os.chdir(MY_PAGES)
     try:
-        with open(page_file, "r", encoding="utf-8") as input_file:
+        with open(markdown_path, "r", encoding="utf-8") as input_file:
             text = input_file.read()
         page_body = markdown.markdown(text, extensions=['sane_lists'])
     except FileNotFoundError:
@@ -36,7 +36,8 @@ for new_page in new_pages:
         continue
 
     # Scan and upload local assets, replacing their URLs
-    page_body = upload_and_replace_assets(page_body, course, MY_PAGES)
+    markdown_dir = os.path.dirname(os.path.abspath(markdown_path))
+    page_body = upload_and_replace_assets(page_body, course, markdown_dir)
 
     # create the page
     created_page = course.create_page({
@@ -47,5 +48,4 @@ for new_page in new_pages:
 
 if not_created != "":
     print("Not created:\n", not_created)
-
 

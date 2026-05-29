@@ -13,7 +13,7 @@ try:
 except:
     print("Please install markdown")
     sys.exit(0)
-from _client import get_canvas_and_course, MY_DISCUSSIONS
+from _client import get_canvas_and_course, upload_and_replace_assets, MY_DISCUSSIONS
 
 canvas, course = get_canvas_and_course()
 print("Selected course: \n", course.name)
@@ -67,6 +67,8 @@ for discussion in discussions:
         continue
 
     message = markdown.markdown(text, extensions=['sane_lists'])
+    markdown_dir = os.path.dirname(os.path.abspath(file_name))
+    message = upload_and_replace_assets(message, course, markdown_dir)
 
     discussion_settings = {
         'title': title,
