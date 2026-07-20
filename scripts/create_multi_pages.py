@@ -15,7 +15,7 @@ print()
 
 # set the title and filename for new pages ['Title Here','file-name.md']
 new_pages = [
-        ['Testing Multipage Script', 'test1.md']
+        # ['Testing Multipage Script', 'test1.md']
         ]
 
 # catch errors

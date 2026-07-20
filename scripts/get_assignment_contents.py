@@ -23,12 +23,7 @@ print()
 # pre-specify assignment IDs to skip the menu
 # run list_assignments.py to find IDs
 # leave empty to use the interactive menu
-assignment_ids = [
-    1234567,
-    1234568,
-    1234569,
-    1234560
-]
+assignment_ids = []
 
 #########################################
 # get one or more assignments to view
