@@ -4,6 +4,10 @@
 # Copy this file to _credentials.py and fill in your local Canvas settings.
 # Do not commit _credentials.py with real API credentials or course IDs.
 
+import os
+
+from _profiles import load_canvas_profile
+
 # Set your system path to this course folder.
 # Include the trailing slash.
 MY_PATH = "/path/to/your/course/folder/"
@@ -12,14 +16,13 @@ MY_ANNOUNCEMENTS = MY_PATH + "announcements/"
 MY_DISCUSSIONS = MY_PATH + "discussions/"
 MY_ASSIGNMENTS = MY_PATH + "assignments/"
 
-# Canvas API URL
-# This is the base URL for your institution's Canvas account.
-# Example: https://example.instructure.com
-API_URL = "https://example.instructure.com"
-
-# Canvas API key
-# Create this in Canvas profile settings.
-API_KEY = "replace-with-your-canvas-access-token"
+# Canvas connection profile
+# The profile stores the institution URL and API key in the user-level profile
+# store. CANVAS_PROFILE, CANVAS_API_URL, and CANVAS_API_KEY can override these
+# values for one command.
+_DEFAULT_CANVAS_PROFILE = "college-name"
+CANVAS_PROFILE = os.environ.get("CANVAS_PROFILE", _DEFAULT_CANVAS_PROFILE)
+API_URL, API_KEY = load_canvas_profile(CANVAS_PROFILE)
 
 # Current Canvas course
 # This is the number in the course URL after /courses/.

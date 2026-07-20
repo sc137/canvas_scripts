@@ -22,7 +22,10 @@ def get_canvas_and_course():
         course = canvas.get_course(COURSE_NUM)
         return canvas, course
     except Exception as e:
-        sys.exit(f"[-] Canvas connection failed: {e}\nPlease check scripts/_credentials.py")
+        sys.exit(
+            f"[-] Canvas connection failed: {e}\n"
+            "Please run setup_course.py and check the course's Canvas profile."
+        )
 
 def choose_item(items, display_attr="name"):
     """Generic interactive selection menu for Canvas list items with O(N) display."""

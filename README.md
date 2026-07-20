@@ -2,13 +2,13 @@
 
 This repository is a collection of Python scripts for managing Canvas LMS course content from local files. It is meant to be cloned for a new class, configured with that course's Canvas credentials, and then used to create, update, list, and export Canvas content as needed.
 
-Credentials are intentionally handled with a local-only file. The repository includes `scripts/_credentials.example.py` as the template, but each user creates their own ignored `scripts/_credentials.py` for real Canvas tokens and course IDs.
+Course configuration and Canvas connection credentials have different scopes. Each course repository has an ignored `scripts/_credentials.py` containing its profile name and course ID. Reusable connection profiles contain an institution URL and API key in the user-level `~/.config/canvas-scripts/profiles.json` file.
 
 The main workflow is:
 
 1. Write course content as Markdown in the content folders.
-2. Copy `scripts/_credentials.example.py` to `scripts/_credentials.py`.
-3. Configure Canvas credentials in `scripts/_credentials.py`.
+2. Run `setup_course.py` to create `scripts/_credentials.py`.
+3. Select or create a reusable Canvas connection profile.
 4. Run scripts from the repository root to create, update, list, or export Canvas course data.
 
 ## What This Is For
@@ -36,6 +36,7 @@ canvas_scripts/
     ├── _chooseFile.py
     ├── _client.py
     ├── _credentials.example.py
+    ├── _profiles.py
     ├── add_module_items.py
     ├── api_get_user_id.py
     ├── api_test.py
@@ -73,7 +74,7 @@ Ensure you have Python 3 installed, then run the interactive onboarding script f
 ./setup_course.py
 ```
 
-This script will automatically create a Python virtual environment (`venv/`), install all required packages, and ask you for your `API_URL`, `API_KEY`, and `COURSE_NUM`. Canvas access tokens are created from Canvas profile settings. `COURSE_NUM` is the number in the course URL after `/courses/`.
+This script will automatically create a Python virtual environment (`venv/`), install all required packages, and ask you for a connection profile and `COURSE_NUM`. A connection profile groups an institution's `API_URL` and `API_KEY`; Canvas access tokens are created from Canvas profile settings. `COURSE_NUM` is the number in the course URL after `/courses/`.
 
 Packages automatically installed include:
 
@@ -84,7 +85,20 @@ Packages automatically installed include:
 - `pandas` writes gradebook data to parquet files.
 - `pyarrow` provides the parquet engine used by pandas.
 
-The setup script will then verify your connection, fetch your user ID, and generate your `scripts/_credentials.py` file. This file is intentionally ignored by Git so your real API tokens are not accidentally committed.
+The setup script verifies the connection, fetches your user ID, saves or updates the selected connection profile, and generates `scripts/_credentials.py`. The profile store is outside the repository and is restricted to the current user on POSIX systems. Do not share or include that file in archives.
+
+Multiple courses can name the same profile and therefore reuse its URL and key. A course using another institution or token selects a different profile. For example:
+
+```text
+college-a -> API URL A + API key A -> courses 101, 102, 201, 202, 301, 302, 401
+college-b -> API URL B + API key B -> course 501
+```
+
+For a temporary one-command override, set `CANVAS_PROFILE`, `CANVAS_API_URL`, or `CANVAS_API_KEY`. These take precedence over the course's configured profile:
+
+```sh
+CANVAS_API_KEY='temporary-token' ./scripts/list_pages.py
+```
 
 > [!TIP]
 > **No manual activation needed!** You do not need to run `source venv/bin/activate`. Thanks to our auto-restarting architecture, you can simply run any script normally (e.g., `./scripts/list_pages.py`), and it will instantly detect and use the virtual environment for you.
